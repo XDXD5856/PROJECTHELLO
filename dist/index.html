@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1117">
+  <meta name="description" content="35K 飞行手账。把飞过的航线、喜欢的机型和下一次出发，收进你的靠窗座位。">
+  <meta name="color-scheme" content="dark">
+  <title>35K · 飞行手账</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1117'/%3E%3Crect x='19' y='10' width='26' height='44' rx='13' fill='none' stroke='%237dd3fc' stroke-width='4'/%3E%3Cpath d='M23 37h18' stroke='%237dd3fc' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./assets/d3-array.min.js"></script>
+  <script defer src="./assets/d3-geo.min.js"></script>
+  <script defer src="./data.js"></script>
+  <script defer src="./core.js"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到航班记录</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <a href="#" class="brand" aria-label="35K 飞行手账首页"><span class="window-mark" aria-hidden="true"></span><span class="brand-name">35K<span class="brand-divider">/</span><span class="brand-cn">飞行手账</span></span></a>
+      <span class="top-note">A WINDOW SEAT, ALWAYS.</span>
+      <button class="button button-quiet" id="data-button"><span data-icon="archive"></span><span>我的数据</span></button>
+    </header>
+
+    <main id="main">
+      <div class="page-heading"><div><p class="eyebrow">THE PERSONAL FLIGHT LOG</p><h1>世界，一程一程。</h1></div><button class="button button-primary" id="add-flight"><span data-icon="plus"></span>记录航班</button></div>
+      <div class="demo-banner" id="demo-banner"><span><b>正在看示例手账</b><span class="demo-detail"> · 试着点一条航线，或开始记录你的第一程。</span></span><button id="start-own">建立我的手账 <span aria-hidden="true">↗</span></button></div>
+      <div class="workspace">
+        <section class="map-panel" aria-label="航线地图">
+          <div class="map-top"><div><span class="eyebrow">YOUR WORLD</span><h2 id="map-title">每一程，都有迹可循</h2></div><div class="map-buttons"><button id="map-reset" class="icon-button" aria-label="重置地球视角" title="重置视角"><span data-icon="globe"></span></button><button id="map-out" class="icon-button" aria-label="缩小地图"><span data-icon="minus"></span></button><button id="map-in" class="icon-button" aria-label="放大地图"><span data-icon="plus"></span></button></div></div>
+          <div class="globe-wrap"><svg id="globe" viewBox="0 0 800 540" role="img" aria-label="航线地球，可拖动旋转；也可通过下方航班列表选择路线"><defs><radialGradient id="ocean" cx="35%" cy="25%"><stop offset="0%" stop-color="#1b3042"/><stop offset="70%" stop-color="#101e2b"/><stop offset="100%" stop-color="#09131e"/></radialGradient><radialGradient id="halo"><stop offset="78%" stop-color="#268fbd" stop-opacity="0"/><stop offset="89%" stop-color="#268fbd" stop-opacity=".10"/><stop offset="100%" stop-color="#268fbd" stop-opacity="0"/></radialGradient><filter id="route-glow"><feGaussianBlur stdDeviation="2"/></filter></defs><g id="globe-layers"></g></svg><div class="map-error" id="map-error" hidden>地图暂时无法显示，航班记录仍然可以使用。</div></div>
+          <div class="map-bottom"><div class="map-legend"><span><i class="line-solid"></i>已飞</span><span><i class="line-dash"></i>想飞</span></div><span class="map-hint">拖动探索 · 点击航线</span><button class="text-button" id="map-east">回到亚洲</button></div>
+        </section>
+        <aside class="journey-panel" id="journey-panel" aria-label="选中航班详情" aria-live="polite"></aside>
+      </div>
+      <section class="stats-row" id="stats" aria-label="飞行统计"></section>
+      <section class="log-section" aria-labelledby="log-heading">
+        <div class="log-toolbar"><div class="log-title"><h2 id="log-heading">我的航程</h2><span id="flight-count"></span></div><div class="log-controls"><div class="segmented" role="group" aria-label="筛选航班状态"><button data-filter="all" class="active" aria-pressed="true">全部</button><button data-filter="flown" aria-pressed="false">已飞</button><button data-filter="wish" aria-pressed="false">想飞</button></div><label class="search-box"><span data-icon="search"></span><input type="search" id="search" placeholder="搜索城市、航班、机型" aria-label="搜索城市、航班或机型"></label></div></div>
+        <div class="flight-list" id="flight-list"></div>
+      </section>
+    </main>
+    <footer><span>35K <span class="footer-divider">/</span> 留一个靠窗的位置。</span><span>记录保存在此浏览器 <span class="footer-divider">·</span> <a href="https://github.com/XDXD5856/PROJECTHELLO/tree/35k-flight-journal" target="_blank" rel="noreferrer">GitHub ↗</a></span></footer>
+  </div>
+
+  <dialog id="flight-dialog" aria-labelledby="flight-dialog-title">
+    <form id="flight-form">
+      <div class="dialog-heading"><div><p class="eyebrow">ANOTHER CHAPTER</p><h2 id="flight-dialog-title">记录一段航程</h2></div><button type="button" class="icon-button close-dialog" aria-label="关闭"><span data-icon="x"></span></button></div>
+      <input type="hidden" name="id">
+      <div class="form-grid"><label>状态<select name="status"><option value="flown">已飞 · 留下回忆</option><option value="wish">想飞 · 期待出发</option></select></label><label>出发日期 <span class="optional">可留空</span><input type="date" name="date" min="1900-01-01" max="2100-12-31"></label>
+      <label>出发机场<input name="from" list="airports" placeholder="HKG · 香港" required autocomplete="off"></label><label>到达机场<input name="to" list="airports" placeholder="HND · 东京羽田" required autocomplete="off"></label>
+      <label>航空公司<input name="airline" list="airlines" placeholder="例如 Cathay Pacific" maxlength="60"></label><label>航班号<input name="number" placeholder="例如 CX542" maxlength="12"></label>
+      <label>机型<select name="aircraft" id="aircraft-select"></select></label><label>注册号 <span class="optional">可留空</span><input name="registration" placeholder="例如 B-LRA" maxlength="20"></label>
+      <label>座位<input name="seat" placeholder="35K" maxlength="12"></label><label>舱等<select name="cabin"><option>经济舱</option><option>特选经济舱</option><option>商务舱</option><option>头等舱</option></select></label>
+      <label class="full-width">这一程想记住的事<textarea name="note" rows="3" maxlength="800" placeholder="窗外的云、起飞那一刻、想去见的人……"></textarea></label></div>
+      <p id="form-error" class="form-error" role="alert"></p><div class="dialog-actions"><button type="button" class="button button-quiet close-dialog">取消</button><button type="submit" class="button button-primary">保存航程</button></div>
+    </form>
+  </dialog>
+  <datalist id="airports"></datalist><datalist id="airlines"><option>Cathay Pacific</option><option>ANA</option><option>Japan Airlines</option><option>Singapore Airlines</option><option>EVA Air</option><option>China Airlines</option><option>STARLUX</option><option>Qatar Airways</option><option>Malaysia Airlines</option><option>Emirates</option></datalist>
+
+  <dialog id="data-dialog" aria-labelledby="data-title"><div class="dialog-heading"><div><p class="eyebrow">KEEP YOUR MEMORIES</p><h2 id="data-title">你的手账，你来保管</h2></div><button class="icon-button close-dialog" aria-label="关闭"><span data-icon="x"></span></button></div><p class="muted">记录只保存在当前设备的浏览器。换设备或清理浏览器前，下载一份备份。</p><div class="data-actions"><button class="data-action" id="export-json"><span data-icon="download"></span><span><b>下载 JSON 备份</b><small>完整记录，可以重新导入</small></span><span aria-hidden="true">↗</span></button><button class="data-action" id="export-csv"><span data-icon="sheet"></span><span><b>导出 CSV 表格</b><small>用 Excel 或 Numbers 打开</small></span><span aria-hidden="true">↗</span></button><button class="data-action" id="import-json"><span data-icon="upload"></span><span><b>导入 JSON 备份</b><small>校验后合并，同编号记录以备份为准</small></span><span aria-hidden="true">↗</span></button></div><input id="import-file" type="file" accept="application/json,.json" hidden><p id="data-message" class="form-error" role="status"></p><div class="data-foot"><button class="text-button" id="demo-toggle">查看示例手账</button><span class="small muted">示例与个人记录独立保存</span></div></dialog>
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title"><div class="dialog-heading"><h2 id="confirm-title">删除这段航程？</h2><button class="icon-button close-dialog" aria-label="关闭"><span data-icon="x"></span></button></div><p id="confirm-text" class="muted"></p><div class="dialog-actions"><button class="button button-quiet close-dialog">取消</button><button class="button button-danger" id="confirm-delete">删除航程</button></div></dialog>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="noscript">请启用 JavaScript 来查看和编辑飞行手账。</p></noscript>
+</body>
+</html>
