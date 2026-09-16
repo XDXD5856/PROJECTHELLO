@@ -1,6 +1,7 @@
 # WorldFork 游戏概念草案
 
 > 状态：Idea / 可继续推翻  
+> 存放位置：PROJECTHELLO 仅保存想法；正式开发应迁移到独立 Private repo  
 > 暂定标语：**Fork reality. Learn the cause. Carry knowledge across worlds.**
 
 ## 一句话
@@ -180,7 +181,7 @@ MVP 的目标不是假装拥有无限 AI，而是证明“分叉—对照—发�
 
 LLM 以后可以负责角色语言表达、新闻和档案摘要，但世界状态与因果必须由确定性引擎决定，否则玩家无法通过实验真正学习规律。
 
-## 技术方向（暂定）
+## 技术方向（仅为未来独立项目的候选方案）
 
 - TypeScript monorepo；
 - React + Canvas/PixiJS 作为地图与 UI；
@@ -191,6 +192,8 @@ LLM 以后可以负责角色语言表达、新闻和档案摘要，但世界状�
 - seedable PRNG 保证可复现；
 - JSON Schema 定义内容包与存档；
 - GitHub Pages 可直接试玩。
+
+以上不会直接在 PROJECTHELLO 内实现。概念通过验证后，再选择或创建独立 Private repo。
 
 ## 当前最需要验证的问题
 
@@ -208,4 +211,4 @@ WorldFork 的核心不应是“AI 社会会自己发生什么”，而应该是�
 
 > **你用版本控制一样的方式研究现实，并把失败世界的知识带往下一轮。**
 
-下一步应先制作一个 10–15 分钟可玩的垂直原型，再决定最终美术、世界观和长期内容。
+下一步应先在独立 Private repo 制作一个 10–15 分钟可玩的垂直原型，再决定最终美术、世界观和长期内容。
