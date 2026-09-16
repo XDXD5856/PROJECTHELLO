@@ -6,7 +6,7 @@
 
 ![窗外的晨光](dist/assets/window.webp)
 
-[在线打开 35K](https://thirty-five-k.groovy-tulip-4906.chatgpt.site) · 当前在线版本仅拥有者可访问。
+[在线打开 35K](https://thirty-five-k.cgm2gjy8d9.chatgpt.site) · 当前在线版本仅拥有者可访问。
 
 ## 打开就能用
 
