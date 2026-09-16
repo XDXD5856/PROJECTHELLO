@@ -14,4 +14,5 @@ Michael 的永久想法仓库。
 
 ## Ideas
 
+- [Idea Batch 001：开放式项目候选](ideas/idea-batch-001.md)
 - [WorldFork：持续运行的因果策略游戏](ideas/worldfork.md)
