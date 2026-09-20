@@ -16,5 +16,6 @@
 - [CyberEternity](cybereternity.md)
 - [PVZPlayer](pvzplayer.md)
 - [WireGuard Manager](wireguard-manager.md)
+- [Project08 — Linux Compute Node](linux-compute-node.md)
 
 > 编号映射若未在卡片中确认，则暂不强行填写，避免覆盖或误认现有 ProjectXX。
