@@ -16,3 +16,8 @@ Michael 的永久想法仓库。
 
 - [Idea Batch 001：开放式项目候选](ideas/idea-batch-001.md)
 - [WorldFork：持续运行的因果策略游戏](ideas/worldfork.md)
+
+## Active projects
+
+- [Project09 — PrivatePulse](projects/private-pulse.md)
+- [Project12 — VPS VPN Manager](projects/wireguard-manager.md)

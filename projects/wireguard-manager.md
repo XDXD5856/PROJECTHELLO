@@ -1,8 +1,10 @@
-# WireGuard Manager
+# Project12 — VPS VPN Manager
 
-> 类型：个人 VPN / 多设备 WireGuard 配置管理  
-> 状态：Idea → Active planning  
-> 正式代码：待独立项目槽位确认
+> 类型：个人 VPN / 多设备 WireGuard 配置管理
+>
+> 状态：Active
+>
+> 正式仓库：`XDXD5856/Project12-VPS-VPN-Manager`
 
 ## 一句话
 
@@ -67,4 +69,4 @@
 
 ## 下一步
 
-确认该项目应使用哪个 ProjectXX 槽位，然后在独立 private repo 建立最小 CLI 与 registry。
+继续在 `Project12-VPS-VPN-Manager` 中验证设备迁移、独立 peer 与安全撤销流程。

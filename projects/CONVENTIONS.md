@@ -65,15 +65,22 @@ Project23 — Unknown / To verify
 
 ## 1.4 项目名格式
 
-推荐 GitHub repository：
+GitHub repository 和本地项目文件夹统一使用：
+
+```text
+ProjectXX-ProjectName
+```
+
+其中 `ProjectXX` 是永久编号，`ProjectName` 是简短、可读的项目名。例如：
 
 ```text
 Project07-PVZPlayer
-Project12-VPNManager
+Project09-PrivatePulse
+Project12-VPS-VPN-Manager
 Project18-LinuxLab
 ```
 
-如果已经存在历史仓库名称，不需要仅为了统一格式强制改名。
+新建正式项目必须遵循这个格式。旧项目在确认链接、部署路径和自动化不会被破坏后，逐步迁移到同一格式。项目改名时只改 `ProjectName`，不改 `ProjectXX`。
 
 ---
 
@@ -424,7 +431,7 @@ PVZPlayer/
 推荐：
 
 ```text
-Project12-VPNManager/
+Project12-VPS-VPN-Manager/
   管理 peer / config 生成 / revoke
 
 HitoriMJ/
@@ -452,7 +459,7 @@ AI 开始工作前：
 4. 如果只是使用依赖，不要随便修改依赖项目。
 5. 如果问题来自依赖项目，应明确指出：
    ```text
-   Root cause appears to belong to Project12-VPNManager.
+   Root cause appears to belong to Project12-VPS-VPN-Manager.
    ```
 6. 需要跨 repo 修改时，把修改拆开并分别验证。
 
